@@ -25,15 +25,8 @@ properties:
     hide: true
   - property: camera_state
     hide: true
-    # sensor:
-    #   state_class: measurement
-    #   device_class: illuminance
-      # not right to set unit to lux 
-      # values I get are:
-      # - highly variable 
-      # - notrelated to amount of light
-      # - include extremes such as: -564M, +301M, +115M (where M is Million)
-      unit: "?"
+    sensor:
+      state_class: measurement
   - property: charcoal_filter_expiration_alarm
     hide: true
     binary_sensor:
@@ -125,7 +118,7 @@ properties:
   - property: environment_real_temperature
     sensor:
       device_class: temperature
-      unit: "°C"
+      unit: °C
   - property: existing_fuzzy_mode
     hide: true
   - property: existing_holiday_mode
@@ -162,8 +155,11 @@ properties:
     hide: true
   - property: free_room
     hide: true
+    binary_sensor:
+      device_class: presence
   - property: free_room_open
-    hide: true
+    binary_sensor:
+      device_class: door
   - property: free_room_open_2
     hide: true
   - property: free_room_over_temp_alarm_failure
@@ -183,14 +179,10 @@ properties:
     number:
       device_class: temperature
       unit: °C
-      min_value: -30
-      max_value: -5
   - property: freeze_min_temperature
     number:
       device_class: temperature
       unit: °C
-      min_value: -30
-      max_value: -5
   - property: freeze_poweroff_ad
     hide: true
   - property: freeze_poweron_ad
@@ -200,13 +192,14 @@ properties:
       device_class: temperature
       unit: °C
   - property: freeze_sensor_real_temperature
-    sensor:
-      device_class: temperature
-      unit: °C
+    hide: true
+    sensor: {}
   - property: freeze_temperature
-    sensor:
+    number:
       device_class: temperature
       unit: °C
+      min_value: -24
+      max_value: -13
   - property: frost_state
     hide: true
     binary_sensor: {}
@@ -417,8 +410,11 @@ properties:
     hide: true
   - property: refr_room
     hide: true
+    binary_sensor:
+      device_class: presence
   - property: refr_room_open
-    binary_sensor: {}
+    binary_sensor:
+      device_class: door
   - property: refr_room_over_temp_alarm
     hide: true
     binary_sensor:
@@ -437,300 +433,388 @@ properties:
       device_class: duration
       unit: s
   - property: refrigerator_freeze_swith
-    # Sample value: 0
+    hide: true
   - property: refrigerator_freeze_swith_state
-    # Sample value: 0
+    hide: true
   - property: refrigerator_max_temperature
-    # Sample value: 9
+    number:
+      device_class: temperature
+      unit: °C
   - property: refrigerator_min_temperature
-    # Sample value: 2
+    number:
+      device_class: temperature
+      unit: °C
   - property: refrigerator_poweroff_ad
-    # Sample value: 0
+    hide: true
   - property: refrigerator_poweron_ad
-    # Sample value: 0
+    hide: true
   - property: refrigerator_real_temperature
-    # Sample value: 6
+    sensor:
+      device_class: temperature
+      unit: °C
   - property: refrigerator_sensor_real_temperature
-    # Sample value: 1
+    hide: true
+    sensor: {}
   - property: refrigerator_temperature
-    # Sample value: 5
+    number:
+      device_class: temperature
+      unit: °C
+      min_value: 2
+      max_value: 9
   - property: reserve45
-    # Sample value: 0
+    disable: true
   - property: reserve46
-    # Sample value: 0
+    disable: true
   - property: reserve47
-    # Sample value: 0
+    disable: true
   - property: reserve48
-    # Sample value: 0
+    disable: true
   - property: reserve49
-    # Sample value: 0
+    disable: true
   - property: reserve50
-    # Sample value: 0
+    disable: true
   - property: reserve51
-    # Sample value: 0
+    disable: true
   - property: reserve52
-    # Sample value: 0
+    disable: true
   - property: reserve53
-    # Sample value: 0
+    disable: true
   - property: reserve54
-    # Sample value: 0
+    disable: true
   - property: reserve55
-    # Sample value: 0
+    disable: true
   - property: reserve56
-    # Sample value: 0
+    disable: true
   - property: reserve57
-    # Sample value: 0
+    disable: true
   - property: reserve58
-    # Sample value: 0
+    disable: true
   - property: reserve59
-    # Sample value: 0
+    disable: true
   - property: reserve60
-    # Sample value: 0
+    disable: true
   - property: reserve61
-    # Sample value: 65535
+    disable: true
+    sensor:
+      unknown_value: 65535
   - property: reserve62
-    # Sample value: 65535
+    disable: true
+    sensor:
+      unknown_value: 65535
   - property: reserve63
-    # Sample value: 65535
+    disable: true
+    sensor:
+      unknown_value: 65535
   - property: reserve64
-    # Sample value: 65535
+    disable: true
+    sensor:
+      unknown_value: 65535
   - property: reserve65
-    # Sample value: 65535
+    disable: true
+    sensor:
+      unknown_value: 65535
   - property: reserve66
-    # Sample value: 65535
+    disable: true
+    sensor:
+      unknown_value: 65535
   - property: reserve67
-    # Sample value: 65535
+    disable: true
+    sensor:
+      unknown_value: 65535
   - property: reserve68
-    # Sample value: 65535
+    disable: true
+    sensor:
+      unknown_value: 65535
   - property: reserve69
-    # Sample value: 65535
+    disable: true
+    sensor:
+      unknown_value: 65535
   - property: reserve70
-    # Sample value: 65535
+    disable: true
+    sensor:
+      unknown_value: 65535
   - property: reserve71
-    # Sample value: 65535
+    disable: true
+    sensor:
+      unknown_value: 65535
   - property: reserve72
-    # Sample value: 65535
+    disable: true
+    sensor:
+      unknown_value: 65535
   - property: rgb_atmosphere_mode_b_value
-    # Sample value: 0
+    hide: true
   - property: rgb_atmosphere_mode_g_value
-    # Sample value: 0
+    hide: true
   - property: rgb_atmosphere_mode_r_value
-    # Sample value: 0
+    hide: true
   - property: rgb_function_mode_b_value
-    # Sample value: 0
+    hide: true
   - property: rgb_function_mode_g_value
-    # Sample value: 0
+    hide: true
   - property: rgb_function_mode_r_value
-    # Sample value: 0
+    hide: true
   - property: rgb_light_atmosphere_brightness
-    # Sample value: 32707
+    hide: true
   - property: rgb_light_atmosphere_on_time
-    # Sample value: 32708
+    hide: true
   - property: rgb_light_function_brightness
-    # Sample value: 0
+    hide: true
   - property: rgb_light_function_on_time
-    # Sample value: 0
+    hide: true
   - property: rgb_light_normal_brightness
-    # Sample value: 301092048
+    hide: true
   - property: rgb_light_normal_on_time
-    # Sample value: 0
+    hide: true
   - property: rgb_light_state
-    # Sample value: 32707
+    hide: true
   - property: rgb_normal_mode_b_value
-    # Sample value: 0
+    hide: true
   - property: rgb_normal_mode_g_value
-    # Sample value: 0
+    hide: true
   - property: rgb_normal_mode_r_value
-    # Sample value: 0
+    hide: true
   - property: right_free_sensor_failure
-    # Sample value: 0
+    hide: true
+    binary_sensor:
+      device_class: problem
   - property: run_status_flag_5
-    # Sample value: 0
+    hide: true
   - property: running_status
-    # Sample value: 0
+    binary_sensor:
+      device_class: running
   - property: running_status3
-    # Sample value: 0
+    hide: true
+    binary_sensor:
+      device_class: running
   - property: rx_failure
-    # Sample value: 0
+    hide: true
+    binary_sensor:
+      device_class: problem
   - property: sabbath_mode_status
-    # Sample value: 32707
+    hide: true
+    binary_sensor: {}
   - property: sabbath_mode_switch_status
-    # Sample value: 0
+    hide: true
+    binary_sensor: {}
   - property: save_mode
     icon: mdi:leaf
     switch: {}
   - property: screen_display_brightness
-    # Sample value: 0
+    hide: true
   - property: screen_display_lock
-    # Sample value: 0
+    hide: true
   - property: screen_to_clock_time
-    # Sample value: 0
+    hide: true
   - property: screen_to_standby_time
-    # Sample value: 0
+    hide: true
   - property: second_ice_maker_init_fault
-    # Sample value: 0
+    hide: true
+    binary_sensor:
+      device_class: problem
   - property: second_ice_maker_sensor_fault
-    # Sample value: 0
+    hide: true
+    binary_sensor:
+      device_class: problem
   - property: sensor_failure_status
-    # Sample value: 0
+    hide: true
   - property: sensor_failure_status2
-    # Sample value: 0
+    hide: true
   - property: sf_mode
     icon: mdi:snowflake
     switch: {}
   - property: sf_sr_mutex_mode
-    # Sample value: 1
+    hide: true
   - property: shelf_light_a_state
-    # Sample value: 301071564
+    binary_sensor:
+      device_class: running
+    options:
+      0: off
+      301071564: on
   - property: shelf_light_atmosphere_brightness
     # Sample value: -980949552
   - property: shelf_light_atmosphere_mode_brightness
     # Sample value: -884305520
   - property: shelf_light_b_state
-    # Sample value: 32707
+    hide: true
+    binary_sensor:
+      device_class: running
+    options:
+      0: off
+      32707: on
   - property: shelf_light_c_state
-    # Sample value: 321848680
+    hide: true
+    sensor:
+      state_class: measurement
   - property: shelf_light_function_mode_brightness
-    # Sample value: 32706
+    hide: true
   - property: shelf_light_function_on_time
-    # Sample value: 321848688
+    hide: true
+    sensor:
+      state_class: measurement
   - property: shelf_light_normal_on_time
-    # Sample value: 0
+    hide: true
   - property: show_mode
-    # Sample value: 0
+    hide: true
   - property: special_space
-    # Sample value: 0
+    hide: true
   - property: sr_mode
     icon: mdi:thermometer-minus
     switch: {}
   - property: standby_mode_state
-    # Sample value: 0
+    hide: true
   - property: standby_mode_valid
-    # Sample value: 0
+    hide: true
   - property: super_water_supply_mode
-    # Sample value: 0
+    hide: true
   - property: temp_auto_ctrl_mode_exist
-    # Sample value: 0
+    hide: true
   - property: temp_auto_ctrl_mode_state
-    # Sample value: 0
+    hide: true
   - property: temperature_room_judge
-    # Sample value: 7
+    hide: true
   - property: temperature_unit
-    # Sample value: 0
+    hide: true
   - property: theme_color
-    # Sample value: 0
+    hide: true
   - property: tx_failure
-    # Sample value: 0
+    hide: true
+    binary_sensor:
+      device_class: problem
   - property: unfreeze_run_status
-    # Sample value: 0
+    hide: true
   - property: unfreeze_switch_status
-    # Sample value: 0
+    hide: true
   - property: unpair_all_users
-    # Sample value: 0
+    hide: true
   - property: up_wine_area_a_evaporator_fault
-    # Sample value: 0
+    hide: true
   - property: up_wine_area_a_fan_fault
-    # Sample value: 0
+    hide: true
   - property: up_wine_area_a_humdy_fault
-    # Sample value: 0
+    hide: true
   - property: up_wine_area_a_temp_fault
-    # Sample value: 0
+    hide: true
   - property: user_debacilli_mode
-    # Sample value: 0
+    hide: true
+    binary_sensor: {}
   - property: uv_steri_status
-    # Sample value: 0
+    hide: true
   - property: vacuum_on_off_status
-    # Sample value: 0
+    hide: true
   - property: var_room_open_2
-    # Sample value: 32707
+    hide: true
   - property: var_room_over_temp_alarm
-    # Sample value: 0
+    hide: true
+    binary_sensor:
+      device_class: problem
   - property: vari_evap_temp_sens_head_failure
-    # Sample value: 0
+    hide: true
+    binary_sensor:
+      device_class: problem
   - property: vari_key
-    # Sample value: 0
+    hide: true
   - property: vari_room
-    # Sample value: 1
+    hide: true
+    binary_sensor:
+      device_class: presence
   - property: vari_room_open
-    # Sample value: 0
+    binary_sensor:
+      device_class: door
   - property: vari_temp_sens_head_failure
-    # Sample value: 0
+    hide: true
+    binary_sensor:
+      device_class: problem
   - property: variable_fan_failure_status
-    # Sample value: 0
+    hide: true
   - property: variable_heater_failure_status
-    # Sample value: 0
+    hide: true
   - property: variable_temperature_space 
-    # Sample value: 0
+    hide: true
   - property: variation_door_open_time
     sensor:
       state_class: measurement
       device_class: duration
       unit: s
   - property: variation_max_temperature
-    # Sample value: 5
+    number:
+      device_class: temperature
+      unit: °C
   - property: variation_min_temperature
-    # Sample value: -18
+    number:
+      device_class: temperature
+      unit: °C
   - property: variation_poweroff_ad
-    # Sample value: 0
+    hide: true
   - property: variation_poweron_ad
-    # Sample value: 0
+    hide: true
   - property: variation_real_temperature
-    # Sample value: -6
+    sensor:
+      device_class: temperature
+      unit: °C
   - property: variation_sensor_real_temperature
-    # Sample value: -40
+    hide: true
+    sensor: {}
   - property: variation_temperature
-    # Sample value: -7
+    number:
+      device_class: temperature
+      unit: °C
+      min_value: -18
+      max_value: 5
   - property: vibration_alarm
-    # Sample value: 0
+    hide: true
+    binary_sensor:
+      device_class: problem
   - property: vibration_sensor_fault
-    # Sample value: 0
+    hide: true
+    binary_sensor:
+      device_class: problem
   - property: water_box_alarm_switch_state
-    # Sample value: 0
+    hide: true
   - property: water_box_lack_status
-    # Sample value: 0
+    hide: true
   - property: water_box_mode_status
-    # Sample value: 0
+    hide: true
   - property: water_filter_surplus_time
-    # Sample value: 0
+    hide: true
   - property: water_filter_time_reset
-    # Sample value: 0
+    hide: true
   - property: water_tank_install_state
-    # Sample value: 0
+    hide: true
   - property: wet_and_dry_space
-    # Sample value: 0
+    hide: true
   - property: wifi_fault_flag
-    # Sample value: 0
+    hide: true
   - property: wifi_handshake_fault_flag
-    # Sample value: 0
+    hide: true
   - property: wifi_next_sendtime
-    # Sample value: 0
+    hide: true
   - property: wifi_rx_fault_flag
-    # Sample value: 0
+    hide: true
   - property: wifi_setting
-    # Sample value: 0
+    hide: true
   - property: wifi_tx_fault_flag
-    # Sample value: 0
+    hide: true
   - property: will_fresh_light_status
-    # Sample value: 0
+    hide: true
   - property: will_fress_light_exist
-    # Sample value: 0
+    hide: true
   - property: will_light_market_mode_state
-    # Sample value: 0
+    hide: true
   - property: will_light_mode_exist
-    # Sample value: 0
+    hide: true
   - property: will_light_mode_state
-    # Sample value: 0
+    hide: true
   - property: will_light_switch_state
-    # Sample value: 0
+    hide: true
   - property: wine_area_switch_status
-    # Sample value: 32708
+    hide: true
   - property: wine_b_switch__area
-    # Sample value: 0
+    hide: true
   - property: wine_light
-    # Sample value: 0
+    hide: true
   - property: wine_sensor_failure_flag
-    # Sample value: 0
+    hide: true
   - property: work_mode1
-    # Sample value: 0
+    hide: true
   - property: work_mode2
-    # Sample value: 0
+    hide: true
