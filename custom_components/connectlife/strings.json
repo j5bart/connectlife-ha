@@ -1465,16 +1465,16 @@
         "name": "Automatic ice making"
       },
       "holiday_mode": {
-        "name": "Holiday mode"
+        "name": "Holiday Mode"
       },
       "save_mode": {
-        "name": "Save mode"
+        "name": "Eco Mode"
       },
       "sf_mode": {
-        "name": "Sf mode"
+        "name": "Super Freeze Mode"
       },
       "sr_mode": {
-        "name": "Sr mode"
+        "name": "Super Cool Mode"
       },
       "t_air": {
         "name": "Air"
