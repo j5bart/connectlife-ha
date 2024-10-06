@@ -220,6 +220,9 @@
       "child_lock": {
         "name": "Child lock"
       },
+      "child_lock_open_alarm": {
+        "name": "Child lock open alarm"
+      },
       "child_lock_status": {
         "name": "Child lock"
       },
@@ -325,6 +328,12 @@
       "free_fan_failure": {
         "name": "Freezer fan failure"
       },
+      "free_room": {
+        "name": "Free room"
+      },
+      "free_room_open": {
+        "name": "Free room open"
+      },
       "free_room_over_temp_alarm_failure": {
         "name": "Freezer room over temp alarm failure"
       },
@@ -337,14 +346,26 @@
       "hard_pairing_status": {
         "name": "Hard pairing status"
       },
+      "human_sensor_switch_exist": {
+        "name": "Human sensor switch exist"
+      },
       "humidity_sensor": {
         "name": "Humidity sensor"
       },
       "humidity_sensor_failure": {
         "name": "Humidity sensor failure"
       },
+      "ice_making_b_switch_status": {
+        "name": "Ice making b switch status"
+      },
       "ice_making_machine_failure": {
         "name": "Ice making machine failure"
+      },
+      "ice_sensor_failure_flag": {
+        "name": "Ice sensor failure flag"
+      },
+      "inlet_pipe_temp_sens_head_failure": {
+        "name": "Inlet pipe temp sens head failure"
       },
       "light": {
         "name": "Light"
@@ -385,6 +406,12 @@
       "open_variation_door_alarm": {
         "name": "Open variation door alarm"
       },
+      "pairing": {
+        "name": "Pairing"
+      },
+      "pairing_active": {
+        "name": "Pairing active"
+      },
       "preheat": {
         "name": "Preheat"
       },
@@ -406,6 +433,9 @@
       "refr_fan_failure": {
         "name": "Refrigerator fan failure"
       },
+      "refr_room": {
+        "name": "Refr room"
+      },
       "refr_room_open": {
         "name": "Refrigerator room open"
       },
@@ -421,6 +451,15 @@
       "remote_control_mode_monitoring": {
         "name": "Remote control mode monitoring"
       },
+      "right_free_sensor_failure": {
+        "name": "Right free sensor failure"
+      },
+      "running_status": {
+        "name": "Running status"
+      },
+      "running_status3": {
+        "name": "Running status3"
+      },
       "rx_failure": {
         "name": "RX failure"
       },
@@ -433,6 +472,12 @@
       "save_mode": {
         "name": "Save mode"
       },
+      "second_ice_maker_init_fault": {
+        "name": "Second ice maker init fault"
+      },
+      "second_ice_maker_sensor_fault": {
+        "name": "Second ice maker sensor fault"
+      },
       "selected_program_anticrease_status": {
         "name": "Anti crease"
       },
@@ -444,6 +489,12 @@
       },
       "session_pairing_active": {
         "name": "Session pairing active"
+      },
+      "shelf_light_a_state": {
+        "name": "Shelf light a state"
+      },
+      "shelf_light_b_state": {
+        "name": "Shelf light b state"
       },
       "sl1_alarm_auto_program_notification": {
         "name": "Zone 1 auto program notification"
@@ -601,11 +652,23 @@
       "tx_failure": {
         "name": "TX failure"
       },
+      "user_debacilli_mode": {
+        "name": "User debacilli mode"
+      },
       "vacuum_on_off_status": {
         "name": "Vacuum on off status"
       },
+      "var_room_over_temp_alarm": {
+        "name": "Var room over temp alarm"
+      },
       "vari_evap_temp_sens_head_failure": {
         "name": "Vari evap temp sens head failure"
+      },
+      "vari_room": {
+        "name": "Vari room"
+      },
+      "vari_room_open": {
+        "name": "Vari room open"
       },
       "vari_temp_sens_head_failure": {
         "name": "Vari temp sens head failure"
@@ -709,6 +772,9 @@
       "bundling_temperature": {
         "name": "Bundling temperature"
       },
+      "camera_state": {
+        "name": "Camera state"
+      },
       "child_lock_setting_status": {
         "name": "Child lock setting"
       },
@@ -797,6 +863,9 @@
       "environment_humidity": {
         "name": "Environment humidity"
       },
+      "environment_real_temperature": {
+        "name": "Environment real temperature"
+      },
       "extradry_setting": {
         "name": "ExtraDry setting"
       },
@@ -808,6 +877,9 @@
       },
       "f_votage": {
         "name": "Measured grid voltage"
+      },
+      "freeze_door_open_time": {
+        "name": "Freeze door open time"
       },
       "freeze_real_temperature": {
         "name": "Freezer real temperature"
@@ -859,6 +931,9 @@
       },
       "real_humidity_c": {
         "name": "Real humidity c"
+      },
+      "refrigerator_door_open_time": {
+        "name": "Refrigerator door open time"
       },
       "refrigerator_real_temperature": {
         "name": "Refrigerator real temperature"
@@ -943,6 +1018,12 @@
           "pyrolysis": "Pyrolysis",
           "none": "None"
         }
+      },
+      "shelf_light_c_state": {
+        "name": "Shelf light c state"
+      },
+      "shelf_light_function_on_time": {
+        "name": "Shelf light function on time"
       },
       "sl1_active_timer": {
         "name": "Zone 1 active timer",
@@ -1363,6 +1444,9 @@
       "utc_datetime_bdc_delaystart_delayend_timestamp": {
         "name": "BDC DelayStart DelayEnd"
       },
+      "variation_door_open_time": {
+        "name": "Variation door open time"
+      },
       "variation_real_temperature": {
         "name": "Variation real temperature"
       },
@@ -1382,6 +1466,15 @@
       },
       "holiday_mode": {
         "name": "Holiday mode"
+      },
+      "save_mode": {
+        "name": "Save mode"
+      },
+      "sf_mode": {
+        "name": "Sf mode"
+      },
+      "sr_mode": {
+        "name": "Sr mode"
       },
       "t_air": {
         "name": "Air"
