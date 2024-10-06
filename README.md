@@ -49,6 +49,7 @@ visibility.
 |              | Induction hob   | 020              | 63c45b513e1a4bf7    |
 |              | Oven            | 023              | 295608422d362be1    |
 |              | Refrigerator    | 026              | 1b0610z0049j        |
+| FMN470W20E   | Refrigerator    | 026              | 1b0470z0067j        |
 | DPNA83W      | Tumble dryer    | 032              | 000                 |
 
 Please, please, please contribute PRs with [mapping files](custom_components/connectlife/data_dictionaries) for your devices!
