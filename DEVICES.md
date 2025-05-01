@@ -30,6 +30,7 @@
 | WF3S1114-LVW004   | Washing machine          | 025              | 1wj105246v0w         |
 |                   | Washing machine          | 026              | 1b0610z0049j         |
 |                   | Washing machine          | 026              | 1b0628z0075j         |
+| FMN470W20E        | Refrigerator             | 026              | 1b0470z0067j         |
 | RS818N4TIE1       | Refrigerator             | 026              | 1b0628z0146j         |
 | WPNA84A2TSWIFI    | Washing machine          | 027              | washing-machine-wm22 |
 | DH3S802BW3        | Tumble dryer             | 030              | 1wk080066v0w         |
