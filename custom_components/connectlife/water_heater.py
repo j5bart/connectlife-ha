@@ -3,7 +3,6 @@ import logging
 
 from homeassistant.components.water_heater import (
     WaterHeaterEntity,
-    WaterHeaterEntityEntityDescription,
     WaterHeaterEntityFeature,
 )
 from homeassistant.config_entries import ConfigEntry
@@ -16,6 +15,7 @@ from homeassistant.const import (
     UnitOfTemperature,
 )
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.entity import EntityDescription
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import (
@@ -30,10 +30,14 @@ from .const import (
 from .coordinator import ConnectLifeCoordinator
 from .dictionaries import Dictionaries, Dictionary
 from .entity import ConnectLifeEntity
-from .temperature import to_temperature_map, to_unit_of_temperature
+from .utils import to_temperature_map, normalize_temperature_unit
 from connectlife.appliance import ConnectLifeAppliance
 
 _LOGGER = logging.getLogger(__name__)
+
+
+class WaterHeaterEntityDescription(EntityDescription, frozen_or_thawed=True):
+    """Class to avoid incompatibility with Home Assistant 2025.1."""
 
 
 async def async_setup_entry(
@@ -86,10 +90,9 @@ class ConnectLifeWaterHeater(ConnectLifeEntity, WaterHeaterEntity):
             config_entry: ConfigEntry,
     ):
         """Initialize the entity."""
-        super().__init__(coordinator, appliance, config_entry)
-        self._attr_unique_id = f"{appliance.device_id}-waterheater"
+        super().__init__(coordinator, appliance, "waterheater", Platform.WATER_HEATER, config_entry)
 
-        self.entity_description = WaterHeaterEntityEntityDescription(
+        self.entity_description = WaterHeaterEntityDescription(
             key=self._attr_unique_id,
             name=appliance.device_nickname,
             translation_key=DOMAIN
@@ -106,7 +109,7 @@ class ConnectLifeWaterHeater(ConnectLifeEntity, WaterHeaterEntity):
         self.unknown_values = {}
 
         for dd_entry in data_dictionary.properties.values():
-            if hasattr(dd_entry, Platform.WATER_HEATER):
+            if hasattr(dd_entry, Platform.WATER_HEATER) and dd_entry in appliance.status_list:
                 self.target_map[dd_entry.water_heater.target] = dd_entry.name
 
         for target, status in self.target_map.items():
@@ -128,7 +131,7 @@ class ConnectLifeWaterHeater(ConnectLifeEntity, WaterHeaterEntity):
                     self._attr_max_temp = max_temp
             elif target == TEMPERATURE_UNIT:
                 for k, v in data_dictionary.properties[status].water_heater.options.items():
-                    if unit := to_unit_of_temperature(v):
+                    if unit := normalize_temperature_unit(v):
                         self.temperature_unit_map[k] = unit
             elif target == STATE:
                 # TODO: map to multiple states
@@ -203,7 +206,7 @@ class ConnectLifeWaterHeater(ConnectLifeEntity, WaterHeaterEntity):
 
         self._attr_available = self.coordinator.data[self.device_id].offline_state == 1
 
-    def get_temperature_limit(self, temperature_map: [UnitOfTemperature, int]):
+    def get_temperature_limit(self, temperature_map: dict[UnitOfTemperature, int] | None):
         if temperature_map and self._attr_temperature_unit in temperature_map:
             return temperature_map[self._attr_temperature_unit]
         else:

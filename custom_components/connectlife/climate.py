@@ -23,6 +23,7 @@ from .const import (
     PRESET,
     PRESETS,
     SWING_MODE,
+    SWING_HORIZONTAL_MODE,
     TARGET_HUMIDITY,
     TARGET_TEMPERATURE,
     TEMPERATURE_UNIT,
@@ -30,7 +31,7 @@ from .const import (
 from .coordinator import ConnectLifeCoordinator
 from .dictionaries import Dictionaries, Dictionary
 from .entity import ConnectLifeEntity
-from .temperature import to_temperature_map, to_unit_of_temperature
+from .utils import to_temperature_map, normalize_temperature_unit
 from connectlife.appliance import ConnectLifeAppliance
 
 _LOGGER = logging.getLogger(__name__)
@@ -93,8 +94,7 @@ class ConnectLifeClimate(ConnectLifeEntity, ClimateEntity):
             config_entry: ConfigEntry
     ):
         """Initialize the entity."""
-        super().__init__(coordinator, appliance, config_entry)
-        self._attr_unique_id = f"{appliance.device_id}-climate"
+        super().__init__(coordinator, appliance, "climate", Platform.CLIMATE, config_entry)
 
         self.entity_description = ClimateEntityDescription(
             key=self._attr_unique_id,
@@ -111,16 +111,18 @@ class ConnectLifeClimate(ConnectLifeEntity, ClimateEntity):
         self.preset_map = {}
         self.swing_mode_map = {}
         self.swing_mode_reverse_map = {}
+        self.swing_horizontal_mode_map = {}
+        self.swing_horizontal_mode_reverse_map = {}
         self.temperature_unit_map = {}
         self.min_temperature_map = {}
         self.max_temperature_map = {}
         self.unknown_values = {}
 
         for dd_entry in data_dictionary.properties.values():
-            if hasattr(dd_entry, Platform.CLIMATE):
+            if hasattr(dd_entry, Platform.CLIMATE) and dd_entry.name in appliance.status_list:
                 self.target_map[dd_entry.climate.target] = dd_entry.name
 
-        hvac_modes = []
+        hvac_modes: list[HVACMode] = []
         for target, status in self.target_map.items():
             if target == IS_ON:
                 self._attr_supported_features |= ClimateEntityFeature.TURN_OFF
@@ -130,19 +132,19 @@ class ConnectLifeClimate(ConnectLifeEntity, ClimateEntity):
                 self._attr_supported_features |= ClimateEntityFeature.TARGET_HUMIDITY
                 self._attr_target_humidity = None
                 self._attr_min_humidity = data_dictionary.properties[status].climate.min_value
-                if min_temp := self.get_temperature_limit(self.min_temperature_map):
-                    self._attr_min_temp = min_temp
                 self._attr_max_humidity = data_dictionary.properties[status].climate.max_value
-                if max_temp := self.get_temperature_limit(self.max_temperature_map):
-                    self._attr_max_temp = max_temp
             elif target == TARGET_TEMPERATURE:
                 self._attr_supported_features |= ClimateEntityFeature.TARGET_TEMPERATURE
                 self._attr_target_temperature = None
                 self.min_temperature_map = to_temperature_map(data_dictionary.properties[status].climate.min_value)
+                if min_temp := self.get_temperature_limit(self.min_temperature_map):
+                    self._attr_min_temp = min_temp
                 self.max_temperature_map = to_temperature_map(data_dictionary.properties[status].climate.max_value)
+                if max_temp := self.get_temperature_limit(self.max_temperature_map):
+                    self._attr_max_temp = max_temp
             elif target == TEMPERATURE_UNIT:
                 for k, v in data_dictionary.properties[status].climate.options.items():
-                    if unit := to_unit_of_temperature(v):
+                    if unit := normalize_temperature_unit(v):
                         self.temperature_unit_map[k] = unit
             elif target == HVAC_MODE:
                 modes = [mode.value for mode in HVACMode]
@@ -164,6 +166,12 @@ class ConnectLifeClimate(ConnectLifeEntity, ClimateEntity):
                 self._attr_swing_modes = list(self.swing_mode_map.values())
                 self._attr_supported_features |= ClimateEntityFeature.SWING_MODE
                 self._attr_swing_mode = None
+            elif target == SWING_HORIZONTAL_MODE:
+                self.swing_horizontal_mode_map = data_dictionary.properties[status].climate.options
+                self.swing_horizontal_mode_reverse_map = {v: k for k, v in self.swing_horizontal_mode_map.items()}
+                self._attr_swing_horizontal_modes = list(self.swing_horizontal_mode_map.values())
+                self._attr_supported_features |= ClimateEntityFeature.SWING_HORIZONTAL_MODE
+                self._attr_swing_horizontal_mode = None
             elif target == HVAC_ACTION:
                 actions = [action.value for action in HVACAction]
                 for (k, v) in data_dictionary.properties[status].climate.options.items():
@@ -257,7 +265,7 @@ class ConnectLifeClimate(ConnectLifeEntity, ClimateEntity):
         self._attr_hvac_mode = hvac_mode if is_on else HVACMode.OFF
         self._attr_available = self.coordinator.data[self.device_id].offline_state == 1
 
-    def get_temperature_limit(self, temperature_map: [UnitOfTemperature, int]):
+    def get_temperature_limit(self, temperature_map: dict[UnitOfTemperature, int] | None):
         if temperature_map and self._attr_temperature_unit in temperature_map:
             return temperature_map[self._attr_temperature_unit]
         else:
@@ -313,6 +321,12 @@ class ConnectLifeClimate(ConnectLifeEntity, ClimateEntity):
         """Set the swing mode."""
         await self.async_update_device({
             self.target_map[SWING_MODE]: self.swing_mode_reverse_map[swing_mode]
+        })
+
+    async def async_set_swing_horizontal_mode(self, swing_horizontal_mode: str) -> None:
+        """Set the swing mode."""
+        await self.async_update_device({
+            self.target_map[SWING_MODE]: self.swing_horizontal_mode_map[swing_horizontal_mode]
         })
 
     def add_target_temperature(self, request: dict[str, int]) -> dict[str, int]:

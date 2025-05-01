@@ -66,8 +66,7 @@ class ConnectLifeHumidifier(ConnectLifeEntity, HumidifierEntity):
             config_entry: ConfigEntry,
     ):
         """Initialize the entity."""
-        super().__init__(coordinator, appliance, config_entry)
-        self._attr_unique_id = f"{appliance.device_id}-humidifier"
+        super().__init__(coordinator, appliance, "humidifier", Platform.HUMIDIFIER, config_entry)
 
         self.target_map = {}
         self.mode_map = {}
@@ -89,7 +88,7 @@ class ConnectLifeHumidifier(ConnectLifeEntity, HumidifierEntity):
         )
 
         for dd_entry in data_dictionary.properties.values():
-            if hasattr(dd_entry, Platform.HUMIDIFIER):
+            if hasattr(dd_entry, Platform.HUMIDIFIER) and dd_entry.name in appliance.status_list:
                 self.target_map[dd_entry.humidifier.target] = dd_entry.name
 
         for target, status in self.target_map.items():
